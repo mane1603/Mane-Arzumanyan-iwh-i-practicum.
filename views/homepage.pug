@@ -6,10 +6,18 @@ html
         link(rel="stylesheet", href="/css/style.css")
     body    
         h1 Travel Destinations
-        .cards 
-            each destination in data
-                .card 
+        table
+            thead
+                tr
+                th Name
+                th Country
+                th Best Time to Visit
+                th Attractions
+            tbody
+                each destination in data
                     - var bestTimeToVisit = destination.properties.best_time_to_visit.replace(/;/g, ', ')
-                    h2.card__name #{destination.properties.destination_general_name}  #{destination.properties.destination_country}
-                    p.card__email Best time to visit - #{bestTimeToVisit} 
-                    p.card__email Attractions - #{destination.properties.attractions}
+                    tr
+                        td #{destination.properties.destination_general_name}
+                        td #{destination.properties.destination_country}
+                        td #{bestTimeToVisit}
+                        td #{destination.properties.attractions}
