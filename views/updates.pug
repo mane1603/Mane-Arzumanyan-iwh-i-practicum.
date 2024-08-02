@@ -1,14 +1,40 @@
 doctype html
-html 
-    head 
-        title= `${title}`
-        meta(name="viewport" content="width=device-width, initial-scale=1")
-        link(rel="stylesheet", href="/css/style.css")
-    body    
-        h1 Travel Destinations
-        a(href="/") Return to the homepage
-        .cards 
-            each destination in data
-                .card 
-                    h2.card__name #{destination.properties.name}  #{destination.properties.lastname}
-                    p.card__email #{destination.properties.email}
+html
+  head
+    title= `${title}`
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="/css/style.css")
+  body
+    h1 Destination Form
+
+    form(action="/update-cobj" method="post" id="updates")
+      div
+        label(for="name") Name:
+        input#name(type="text" name="name" required placeholder="Enter name")
+
+      div
+        label(for="months") Best Time to Visit (Select multiple months):
+        select#months(name="months" multiple required)
+          option(value="January") January
+          option(value="February") February
+          option(value="March") March
+          option(value="April") April
+          option(value="May") May
+          option(value="June") June
+          option(value="July") July
+          option(value="August") August
+          option(value="September") September
+          option(value="October") October
+          option(value="November") November
+          option(value="December") December
+
+      div
+        label(for="attractions") Attractions:
+        input#attractions(type="text" name="attractions" placeholder="Enter Attractions")
+
+      div
+        label(for="notes") Country:
+        input#notes(type="text" name="notes" placeholder="Enter Country")
+
+      div
+        button(type="submit") Submit
