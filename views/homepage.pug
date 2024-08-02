@@ -1,0 +1,28 @@
+doctype html
+html 
+    head 
+        title= `${title}`
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+    body    
+        h1 Travel Destinations
+        a(href="/update-cobj") Add/update this table
+        table
+            thead
+                tr
+                th Name
+                th Country
+                th Best Time to Visit
+                th Attractions
+            tbody
+                each destination in data
+                    - var bestTimeToVisit = destination.properties.best_time_to_visit
+                    - if (bestTimeToVisit?.includes(';'))
+                        - bestTimeToVisit = bestTimeToVisit.replace(/;/g, ', ')
+                    - else 
+                        - bestTimeToVisit = bestTimeToVisit
+                    tr
+                        td #{destination.properties.destination_general_name}
+                        td #{destination.properties.destination_country}
+                        td #{bestTimeToVisit}
+                        td #{destination.properties.attractions}
