@@ -1,0 +1,15 @@
+doctype html
+html 
+    head 
+        title= `${title}`
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+    body    
+        h1 Travel Destinations
+        .cards 
+            each destination in data
+                .card 
+                    - var bestTimeToVisit = destination.properties.best_time_to_visit.replace(/;/g, ', ')
+                    h2.card__name #{destination.properties.destination_general_name}  #{destination.properties.destination_country}
+                    p.card__email Best time to visit - #{bestTimeToVisit} 
+                    p.card__email Attractions - #{destination.properties.attractions}

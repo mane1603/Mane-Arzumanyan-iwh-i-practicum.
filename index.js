@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const app = express();
@@ -13,7 +14,24 @@ const PRIVATE_APP_ACCESS = process.env.APP_TOKEN;
 // TODO: ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
 
 app.get('/', async (req, res) => {
-    res.render('homepage', { title: '', data: [] });   
+    const travelDestinations = 'https://api.hubapi.com/crm/v3/objects/2-32852654';
+    const headers = {
+        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+        'Content-Type': 'application/json'
+    }
+    try {
+        const properties = ["destination_general_name", "attractions", "best_time_to_visit", "destination_country", ""]
+        const resp = await axios.get(travelDestinations, {
+            headers : headers,
+            params : {
+                properties: properties.join(',')
+            }
+        });
+        const data = resp.data.results;
+        res.render('homepage', { title: 'Travel Destinations | HubSpot APIs', data });      
+    } catch (error) {
+        console.error(error);
+    }
 });
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
