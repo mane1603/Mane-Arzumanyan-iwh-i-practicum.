@@ -16,7 +16,11 @@ html
                 th Attractions
             tbody
                 each destination in data
-                    - var bestTimeToVisit = destination.properties.best_time_to_visit.replace(/;/g, ', ')
+                    - var bestTimeToVisit = destination.properties.best_time_to_visit
+                    - if (bestTimeToVisit?.includes(';'))
+                        - bestTimeToVisit = bestTimeToVisit.replace(/;/g, ', ')
+                    - else 
+                        - bestTimeToVisit = bestTimeToVisit
                     tr
                         td #{destination.properties.destination_general_name}
                         td #{destination.properties.destination_country}

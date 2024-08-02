@@ -20,7 +20,7 @@ app.get('/', async (req, res) => {
         'Content-Type': 'application/json'
     }
     try {
-        const properties = ["destination_general_name", "attractions", "best_time_to_visit", "destination_country", ""]
+        const properties = ["destination_general_name", "attractions", "best_time_to_visit", "destination_country"]
         const resp = await axios.get(travelDestinations, {
             headers : headers,
             params : {
@@ -43,53 +43,28 @@ app.get('/update-cobj', async (req, res) => {
 // TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
 
 app.post('/update-cobj', async (req, res) => {
-    res.send({})
-});
-
-/** 
-* * This is sample code to give you a reference for how you should structure your calls. 
-
-* * App.get sample
-app.get('/contacts', async (req, res) => {
-    const contacts = 'https://api.hubspot.com/crm/v3/objects/contacts';
-    const headers = {
-        Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
-        'Content-Type': 'application/json'
-    }
-    try {
-        const resp = await axios.get(contacts, { headers });
-        const data = resp.data.results;
-        res.render('contacts', { title: 'Contacts | HubSpot APIs', data });      
-    } catch (error) {
-        console.error(error);
-    }
-});
-
-* * App.post sample
-app.post('/update', async (req, res) => {
-    const update = {
+    console.log(req.body)
+    const newObjectData = {
         properties: {
-            "favorite_book": req.body.newVal
+            "destination_general_name": req.body?.destination_general_name,
+            "attractions" : req.body?.attractions,
+            "best_time_to_visit" : Array.isArray(req.body?.best_time_to_visit) ? req.body?.best_time_to_visit?.join(';') : req.body?.best_time_to_visit,
+            "destination_country" : req.body?.destination_country
         }
     }
-
-    const email = req.query.email;
-    const updateContact = `https://api.hubapi.com/crm/v3/objects/contacts/${email}?idProperty=email`;
+    console.log(newObjectData)
+    const addNewObject = `https://api.hubapi.com/crm/v3/objects/2-32852654`;
     const headers = {
         Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
         'Content-Type': 'application/json'
     };
 
     try { 
-        await axios.patch(updateContact, update, { headers } );
-        res.redirect('back');
+        await axios.post(addNewObject, newObjectData, { headers } );
+        res.redirect('/');
     } catch(err) {
         console.error(err);
     }
-
 });
-*/
 
-
-// * Localhost
 app.listen(3000, () => console.log('Listening on http://localhost:3000'));
